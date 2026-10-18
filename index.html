@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Headwaters Discovery .org</title>
-  <meta name="description" content="Headwaters is a not-for-profit team using AI and systems biology to find new neurodegeneration targets&mdash;starting with Parkinson&rsquo;s disease&mdash;and publishing them openly.">
+  <meta name="description" content="Open science at the source. Headwaters is a not-for-profit lab developing open data, tools, and hypotheses the rest of the field builds on.">
   <meta property="og:title" content="Headwaters Discovery .org">
-  <meta property="og:description" content="Headwaters is a not-for-profit team using AI and systems biology to find new neurodegeneration targets&mdash;starting with Parkinson&rsquo;s disease&mdash;and publishing them openly.">
+  <meta property="og:description" content="Open science at the source. Headwaters is a not-for-profit lab developing open data, tools, and hypotheses the rest of the field builds on.">
   <meta property="og:image" content="https://headwatersdiscovery.org/assets/headwaters-poster.jpg">
   <meta property="og:url" content="https://headwatersdiscovery.org/">
   <meta name="theme-color" content="#07090d">
@@ -106,15 +106,6 @@
       padding: 3rem 0;
     }
 
-    .eyebrow {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-      margin-bottom: 1.5rem;
-    }
-
     h1 {
       font-family: var(--serif);
       font-weight: 300;
@@ -129,8 +120,34 @@
       font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
       color: var(--ink-muted);
       max-width: 34rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
     }
+
+    /* Project list: one row per program, separated by hairlines. */
+    .projects {
+      list-style: none;
+      padding: 0;
+      max-width: 34rem;
+      margin-bottom: 2.5rem;
+      border-top: 1px solid var(--rule);
+    }
+    .projects li {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink-muted);
+      font-size: 0.9375rem;
+    }
+    .projects strong { color: var(--ink); font-weight: 500; }
+    .status {
+      display: block;
+      margin-top: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .status a.link { font-size: inherit; }
 
     .cta {
       align-self: flex-start;
@@ -174,9 +191,18 @@
     </header>
 
     <main>
-      <p class="eyebrow">Launching in 2027</p>
-      <h1>Discovering neurodegeneration therapies <em>upstream</em></h1>
-      <p class="lede">Neurodegeneration research has converged on a few familiar targets. Headwaters is a not-for-profit team using AI and systems biology to find new ones&mdash;starting with Parkinson&rsquo;s disease&mdash;and publishing them openly.</p>
+      <h1>Open science at the <em>source</em></h1>
+      <p class="lede">Headwaters is a not-for-profit lab developing open data, tools, and hypotheses the rest of the field builds on.</p>
+      <ul class="projects">
+        <li>
+          <strong>Parkinson&rsquo;s Disease:</strong> Neurodegeneration research has converged on a few familiar targets. We&rsquo;re using AI and systems biology to find new ones the field hasn&rsquo;t yet explored.
+          <span class="status">In progress</span>
+        </li>
+        <li>
+          <strong>PhyloBot:</strong> Many promising therapeutic proteins are too unstable or too hard to produce to become medicines. PhyloBot is open-source software that reconstructs their evolutionary ancestors, which are often sturdier and better starting points for new drugs.
+          <span class="status"><a class="link" href="https://phylobot.com">Available now &rarr;</a></span>
+        </li>
+      </ul>
       <a class="cta" href="mailto:contact@headwatersdiscovery.org">Get in touch</a>
     </main>
 
