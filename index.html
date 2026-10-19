@@ -190,6 +190,20 @@
     </video>
   </div>
 
+  <script>
+    /* Low Power Mode and battery-saving browser profiles block autoplay, and the browser
+       then stamps a play button over the background. Hide the video when it cannot play;
+       the .bg background image shows the poster frame in its place. */
+    (function () {
+      var video = document.querySelector(".bg video");
+      if (!video) return;
+      function showPoster() { video.style.display = "none"; }
+      video.addEventListener("error", showPoster);
+      var started = video.play();
+      if (started && typeof started.catch === "function") started.catch(showPoster);
+    })();
+  </script>
+
   <div class="page">
     <header>
       <a class="wordmark" href="/">Headwaters Discovery</a>
