@@ -7,7 +7,8 @@ published; everything else in the repo (this file, `video/` tooling) is not.
 ```
 docs/
   index.html      the page
-  assets/         favicon, background video, poster image
+  assets/         favicon, background video, poster image, figures.js and pink1.png
+                  (the pictures beside the projects)
   CNAME           tells GitHub Pages to serve at headwatersdiscovery.org
   .nojekyll       serve files as-is (skip GitHub's Jekyll build)
 ```

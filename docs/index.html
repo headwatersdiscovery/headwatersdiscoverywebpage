@@ -13,7 +13,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #07090d;
@@ -23,7 +23,10 @@
       --rule: rgba(242, 239, 232, 0.22);
       --serif: "Fraunces", Georgia, "Times New Roman", serif;
       --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       --gutter: clamp(1.25rem, 5vw, 4rem);
+      /* The project list is a little wider than the 34rem text above it, to make room for its pictures. */
+      --list: 41.5rem;
     }
 
     * { box-sizing: border-box; margin: 0; }
@@ -101,7 +104,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      max-width: 40rem;
+      max-width: var(--list);
       padding: 3rem 0;
     }
 
@@ -111,7 +114,7 @@
       font-size: clamp(2.5rem, 7vw, 4.75rem);
       line-height: 1.05;
       letter-spacing: -0.015em;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
     h1 em { font-style: italic; }
 
@@ -119,28 +122,50 @@
       font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
       color: var(--ink-muted);
       max-width: 34rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
     }
 
-    /* Project list: one row per program, separated by hairlines. */
+    /* Project list: one row per program, under a hairline. */
     .projects {
       list-style: none;
       padding: 0;
-      max-width: 34rem;
-      margin-bottom: 2.5rem;
-      border-top: 1px solid var(--rule);
+      max-width: var(--list);
+      margin-bottom: 2rem;
+    }
+    /* The hairline above the list. assets/figures.js sets --rule-width so it ends where the text does. */
+    .projects::before {
+      content: "";
+      display: block;
+      width: var(--rule-width, 100%);
+      height: 1px;
+      background: var(--rule);
     }
     .projects li {
+      display: grid;
+      grid-template-columns: var(--figure, 6.25rem) 1fr;
+      gap: 1.25rem;
+      align-items: start;
       padding: 1rem 0;
-      border-bottom: 1px solid var(--rule);
       color: var(--ink-muted);
       font-size: 0.9375rem;
     }
+    /* A square picture beside each project. assets/figures.js sets --figure to the height of the text. */
+    .figure {
+      display: block;
+      width: var(--figure, 6.25rem);
+      height: var(--figure, 6.25rem);
+      color: var(--ink);
+    }
+    .figure path { fill: none; stroke: currentColor; stroke-opacity: 0.5; stroke-width: 1; vector-effect: non-scaling-stroke; }
+    .figure circle { fill: currentColor; fill-opacity: 0.7; }
+    .figure .ancestor { fill-opacity: 1; }
+    .figure .halo { fill: none; stroke: currentColor; stroke-opacity: 0.4; stroke-width: 1; vector-effect: non-scaling-stroke; }
     .projects strong { color: var(--ink); font-weight: 500; }
     .status {
       display: block;
-      margin-top: 0.4rem;
-      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -152,22 +177,8 @@
       font-size: 0.9375rem;
       color: var(--ink-muted);
       max-width: 34rem;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
-
-    .cta {
-      align-self: flex-start;
-      display: inline-block;
-      color: var(--bg);
-      background: var(--ink);
-      font-size: 0.9375rem;
-      font-weight: 500;
-      text-decoration: none;
-      padding: 0.85rem 1.6rem;
-      border-radius: 999px;
-      transition: opacity 0.2s;
-    }
-    .cta:hover, .cta:focus-visible { opacity: 0.85; }
 
     footer {
       font-size: 0.8125rem;
@@ -207,31 +218,45 @@
   <div class="page">
     <header>
       <a class="wordmark" href="./">Headwaters Discovery Group</a>
-      <a class="link" href="mailto:contact@headwatersdiscovery.org">Contact</a>
     </header>
 
     <main>
-      <h1>Open Science,<br>at the <em>source</em></h1>
-      <p class="lede">Headwaters is a not-for-profit lab developing open data, tools, and hypotheses the rest of the field builds on.</p>
+      <h1>Open Science at the <em>Source</em></h1>
+      <p class="lede">Headwaters is a not-for-profit lab developing open data, tools, and discoveries the rest of the field builds on.</p>
       <ul class="projects">
         <li>
-          <strong>Protein Engineering:</strong> Many promising therapeutic proteins are too unstable or too hard to produce to become medicines. Our open-source software, PhyloBot, reconstructs their evolutionary ancestors, which are often sturdier, and better starting points for new drugs.
-          <span class="status"><a class="link" href="https://phylobot.com">Available now &rarr;</a></span>
+          <!-- A phylogeny: living proteins at the tips on the right, and one reconstructed ancestor marked. -->
+          <svg class="figure" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <path d="M3 63H10 M10 36V90 M10 36H26 M10 90H74 M26 18V54 M26 18H58 M26 54H44 M58 10V26 M58 10H88 M58 26H80 M44 42V66 M44 42H90 M44 66H64 M64 58V74 M64 58H84 M64 74H92"/>
+            <circle cx="88" cy="10" r="1.9"/><circle cx="80" cy="26" r="1.9"/><circle cx="90" cy="42" r="1.9"/>
+            <circle cx="84" cy="58" r="1.9"/><circle cx="92" cy="74" r="1.9"/><circle cx="74" cy="90" r="1.9"/>
+            <circle cx="10" cy="63" r="1.6"/><circle cx="58" cy="18" r="1.6"/><circle cx="44" cy="54" r="1.6"/><circle cx="64" cy="66" r="1.6"/>
+            <circle class="halo" cx="26" cy="36" r="6.5"/><circle class="ancestor" cx="26" cy="36" r="3"/>
+          </svg>
+          <div class="about">
+            <strong>PhyloBot:</strong> Open-source software that reconstructs the evolutionary ancestors of proteins. Often sturdier than their modern descendants, they make better starting points for protein-based medicines.
+            <span class="status"><a class="link" href="https://phylobot.com">Available now &rarr;</a></span>
+          </div>
         </li>
         <li>
-          <strong>Parkinson&rsquo;s Disease:</strong> The genes causing Parkinson&rsquo;s are known, but most variants in them are too rare to classify. We use evolutionary history to separate the damaging changes from the harmless ones &mdash; stratifying patients by mechanism and revealing which sites are worth drugging.
-          <span class="status">In progress</span>
+          <!-- Human PINK1 (UniProt Q9BXM7), AlphaFold model, with three example surface sites in white. Made by figures/pink1.py. -->
+          <img class="figure" src="assets/pink1.png" width="360" height="360" alt="">
+          <div class="about">
+            <strong>Parkinson&rsquo;s disease:</strong> The genes behind Parkinson&rsquo;s are known, but most variants in them are too rare to classify. We use evolutionary history to separate the damaging changes from the harmless ones.
+            <span class="status">In progress</span>
+          </div>
         </li>
-
       </ul>
-      <p class="note">We&rsquo;re just getting started. First open releases are planned for 2027.</p>
-      <a class="cta" href="mailto:contact@headwatersdiscovery.org">Collaborate with us</a>
+      <p class="note">We&rsquo;re just getting started. Launching in 2027.</p>
+      <p class="note"><a class="link" href="mailto:hello@headwatersdiscovery.org">--> Collaborate with us.</a></p>
     </main>
 
     <footer>
       <span>&copy; 2026 Headwaters Discovery Group</span>
-      <a href="mailto:contact@headwatersdiscovery.org">contact@headwatersdiscovery.org</a>
+      <a href="mailto:hello@headwatersdiscovery.org">hello@headwatersdiscovery.org</a>
     </footer>
   </div>
+
+  <script src="assets/figures.js"></script>
 </body>
 </html>
