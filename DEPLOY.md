@@ -1,8 +1,16 @@
 # Deploying headwatersdiscovery.org
 
-The site is a single static page (`index.html` plus `assets/`), served by
-GitHub Pages from the `main` branch of this repository. The `CNAME` file in
-the repo root tells GitHub Pages to serve it at `headwatersdiscovery.org`.
+The site is a single static page, served by GitHub Pages from the `docs/`
+folder on the `main` branch of this repository. Only files inside `docs/` are
+published; everything else in the repo (this file, `video/` tooling) is not.
+
+```
+docs/
+  index.html      the page
+  assets/         favicon, background video, poster image
+  CNAME           tells GitHub Pages to serve at headwatersdiscovery.org
+  .nojekyll       serve files as-is (skip GitHub's Jekyll build)
+```
 
 ## 1. Turn on GitHub Pages
 
@@ -11,10 +19,10 @@ the repo root tells GitHub Pages to serve it at `headwatersdiscovery.org`.
 2. Go to **Settings → Pages**.
 3. Under **Build and deployment**, set:
    - **Source:** Deploy from a branch
-   - **Branch:** `main`, folder `/ (root)`
+   - **Branch:** `main`, folder `/docs`
 4. Click **Save**.
 5. Under **Custom domain**, confirm it shows `headwatersdiscovery.org`
-   (it is read from the `CNAME` file). If it is blank, type it in and save.
+   (it is read from `docs/CNAME`). If it is blank, type it in and save.
 
 Within a minute or two the site will also be reachable at
 `https://vhsvhs.github.io/headwatersdiscoverywebpage/`, which is a handy check
@@ -77,11 +85,12 @@ Pages if the repo's Pages setting is ever turned off.
 
 ## Updating the site
 
-Edit `index.html` (or files in `assets/`), then commit and push to `main`.
+Edit `docs/index.html` (or files in `docs/assets/`), then commit and push to `main`.
 GitHub Pages redeploys automatically within a minute or two.
 
-Keep non-site files (drafts, internal documents, source footage) out of this
-folder, or out of commits. Everything pushed here is publicly visible. Stage
+Keep non-site files (drafts, internal documents, source footage) out of
+`docs/`. Only `docs/` is served as the website, but if the repository is public
+every committed file is still visible on GitHub. Stage
 files by name rather than with `git add .`.
 
 ## Troubleshooting
@@ -92,7 +101,7 @@ files by name rather than with `git add .`.
   Wait up to an hour after DNS is correct. If it stays stuck, remove the
   custom domain in Settings → Pages, save, re-add it, and save again.
 - **404 at the custom domain:** confirm Pages is deployed from `main` /
-  `/ (root)` and that the `CNAME` file still exists in the repo root.
+  `/docs` and that `docs/CNAME` still exists.
 - **Old version still showing:** hard-refresh the browser (Cmd+Shift+R), or
   check the **Actions** tab for the latest "pages build and deployment" run.
 
@@ -102,12 +111,12 @@ To keep the source private, use a host that serves static sites from private
 repos for free:
 
 - **Netlify:** Add new site → Import from GitHub → pick this repo. Leave the
-  build command empty and set the publish directory to `/`. Then add
+  build command empty and set the publish directory to `docs`. Then add
   `headwatersdiscovery.org` under Domain management and follow Netlify's DNS
   instructions.
 - **Cloudflare Pages:** Workers & Pages → Create → Pages → Connect to Git →
-  pick this repo. Use no build command and output directory `/`. Add the custom
+  pick this repo. Use no build command and output directory `docs`. Add the custom
   domain under the project's Custom domains tab.
 
-If you switch hosts, delete the `CNAME` file (it is only used by GitHub Pages)
+If you switch hosts, delete `docs/CNAME` (it is only used by GitHub Pages)
 and use the DNS records the new host gives you instead of the ones above.

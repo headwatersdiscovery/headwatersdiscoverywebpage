@@ -1,8 +1,8 @@
-# Background video: how `assets/headwaters-bg.mp4` is made
+# Background video: how `docs/assets/headwaters-bg.mp4` is made
 
 The homepage background is a moonrise over Evolution Valley, built from one
 source clip in four steps. Running the commands below reproduces
-`assets/headwaters-bg.mp4` **byte for byte** (verified 2026-10-18).
+`docs/assets/headwaters-bg.mp4` **byte for byte** (verified 2026-10-18).
 
 ```
 52220035608_9e5b280dae_vm.mp4   original Flickr download, 12.5 s, 1280x720, 11.6 Mbps, with audio
@@ -12,10 +12,10 @@ source clip in four steps. Running the commands below reproduces
 stab.mp4                        stabilized master, 12.0 s, ~15 MB, near-lossless (CRF 12)
         │  3. loop.py       noise reduction + mild grade + 1.5 s crossfade loop
         ▼
-assets/headwaters-bg.mp4        10.5 s seamless loop, ~920 KB, no audio
+docs/assets/headwaters-bg.mp4   10.5 s seamless loop, ~920 KB, no audio
         │  4. ffmpeg        first frame
         ▼
-assets/headwaters-poster.jpg    still shown while the video loads
+docs/assets/headwaters-poster.jpg still shown while the video loads
 ```
 
 The source clip is not committed (it is in `.gitignore`). Keep a copy of it,
@@ -71,7 +71,7 @@ venv/bin/python video/stabilize.py $FF $SRC motion.txt stab.mp4 360
 
 ```bash
 GRADE="curves=all='0/0 0.06/0.11 0.2/0.31 0.6/0.68 1/1',colorbalance=bs=0.06:bm=0.04:rs=-0.02:rm=-0.02"
-venv/bin/python video/loop.py $FF stab.mp4 assets/headwaters-bg.mp4 360 45 "$GRADE"
+venv/bin/python video/loop.py $FF stab.mp4 docs/assets/headwaters-bg.mp4 360 45 "$GRADE"
 ```
 
 - **Noise reduction:** `hqdn3d=3:3:6:6` is always applied (it is built into the
@@ -95,7 +95,7 @@ venv/bin/python video/loop.py $FF stab.mp4 assets/headwaters-bg.mp4 360 45 "$GRA
 ## 4. Poster frame
 
 ```bash
-$FF -y -i assets/headwaters-bg.mp4 -frames:v 1 -q:v 4 assets/headwaters-poster.jpg
+$FF -y -i docs/assets/headwaters-bg.mp4 -frames:v 1 -q:v 4 docs/assets/headwaters-poster.jpg
 ```
 
 ## Choices made along the way (2026-10-18)
